@@ -17,15 +17,15 @@ def read_records():
 
 def detect_email(record):
     fields = record.keys()
-    email_fields = []
+    fields_email = []
 
     for field in fields:
         entry = record[field]
         match_obj = re.search(r"(^[\w.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", entry)
         if match_obj is not None:
-            email_fields.append(field)
+            fields_email.append(field)
 
-    return email_fields
+    return fields_email
 
 
 def read_contents():
@@ -33,3 +33,21 @@ def read_contents():
     with open(filepath, 'r') as file:
         contents = file.read()
     return contents
+
+
+def get_variables(fields, body_template):
+    variables = []
+    obj = re.finditer(r"%{(.+?)}%", body_template)
+
+    for i in obj:
+        v = i.group(1)
+
+        if v in variables:
+            continue
+        elif v in fields:
+            variables.append(v)
+        else:
+            ui.invalid_variable(v)
+
+    ui.variables_matched(len(variables))
+    return variables
