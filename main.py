@@ -1,7 +1,9 @@
-from modules import ui, data
+from modules import data, mail, ui
 
 
+# Show project title & connect to smtp server
 ui.project_title('Custom Mailing Client')
+mail.connect_server()
 
 
 # Read records from csv file
@@ -23,5 +25,9 @@ ui.show_content(subject, body_template)
 
 # Extract variables from body template
 variables = data.get_variables(fields, body_template)
+
+
+# login to sender's gmail account
+mail.sender_login()
 
 input()
