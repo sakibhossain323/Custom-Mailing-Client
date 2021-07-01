@@ -92,6 +92,8 @@ def variables_matched(len_vars):
 def get_login_info(tried):
     if tried == 0:
         print("Login to your gmail account")
+    else:
+        print("Please try again!")
 
     login_info = dict()
     login_info['email'] = input('Email: ')
@@ -101,11 +103,23 @@ def get_login_info(tried):
 
 def authentication_error():
     print("\nLogin failed! SMTP authentication error. Possible reasons:")
-    print("1) Email/password was incorrect.\n2) Your account doesn't allow access via app.")
-    print("Please try again!\n")
+    print("1) Email/password was incorrect.\n2) Your account doesn't allow access via app.\n")
 
 
 def connection_lost():
     print("\nConnection lost to server! Trying to reconnect...")
     mail.connect_server()
-    print("Connection reestablished. Please try again!\n")
+    print("Reconnected to SMTP server!\n")
+
+
+def login_success():
+    input("\nSuccessfully logged in! Press Enter to continue...\n")
+
+
+def already_sent(sent, total):
+    print(f"\nEmails sent successfully: {sent} out of {total}\n")
+
+
+def sent_all(len_records):
+    print(f"All emails are sent successfully! (Total: {len_records}\n")
+    input("Press Enter to close program...")

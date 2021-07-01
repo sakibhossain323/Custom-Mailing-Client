@@ -49,5 +49,12 @@ def get_variables(fields, body_template):
         else:
             ui.invalid_variable(v)
 
-    ui.variables_matched(len(variables))
     return variables
+
+
+def generate_body(template, record, variables):
+    body = template
+    for v in variables:
+        body = body.replace(f"%{{{v}}}%", record[v])
+
+    return body

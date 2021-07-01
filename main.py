@@ -25,9 +25,13 @@ ui.show_content(subject, body_template)
 
 # Extract variables from body template
 variables = data.get_variables(fields, body_template)
+ui.variables_matched(len(variables))
 
 
 # login to sender's gmail account
 mail.sender_login()
+ui.login_success()
 
-input()
+# send email
+mail.send_email(email_field, subject, body_template, records, variables)
+ui.sent_all(len(records))
