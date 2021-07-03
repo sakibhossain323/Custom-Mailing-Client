@@ -1,4 +1,9 @@
 import logging
+import os
+
+
+if not os.path.exists('Logs'):
+    os.makedirs('Logs')
 
 
 def email_logger():
