@@ -1,8 +1,9 @@
-from modules import data, ui
+from modules import data, ui, logger
 from email.message import EmailMessage
 import smtplib
 
 
+# Global Variables
 server, sender_email = None, None
 
 
@@ -34,13 +35,14 @@ def sender_login():
             ui.connection_lost()
             tried += 1
         except Exception as err:
-            ui.unknown_error(err)
+            ui.unexpected_error(err)
 
 
 def send_email(email_field, subject, body_template, records, variables):
     sent, total = 0, len(records)
-    file = open('Logs/emails_sent.txt', 'w')
-    file.close()
+
+    sent_log = logger.email_logger()
+    sent_log.info(f"Emails to be sent: {total}")
 
     for record in records:
         body = data.generate_body(body_template, record, variables)
@@ -57,14 +59,14 @@ def send_email(email_field, subject, body_template, records, variables):
                 # noinspection PyUnresolvedReferences
                 server.send_message(mail)
                 sent += 1
-                with open('Logs/emails_sent.txt', 'a') as file:
-                    file.write(f"{sent}) {record[email_field]}\n")
+                sent_log.info(f"{sent}) {record[email_field]}")
                 this = False
 
             except smtplib.SMTPServerDisconnected:
-                ui.already_sent(sent, total)
                 ui.connection_lost()
                 sender_login()
             except Exception as err:
-                ui.already_sent(sent, total)
-                ui.unknown_error(err)
+                ui.unexpected_error(err)
+        ui.already_sent(sent, total)
+
+    sent_log.info(f"All emails sent successfully! Total({total})")

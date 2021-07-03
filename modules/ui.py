@@ -1,16 +1,21 @@
 import tkinter as tk
 from tkinter import filedialog
-from modules import mail
+from modules import mail, logger
 
 
-def unknown_error(error):
-    print(f"\n{error}\nCouldn't resolve the error! Please contact sys.execute@gmail.com\n")
+def unexpected_error(error):
+    error_log = logger.error_logger()
+    error_log.exception(error)
+    print(f"\n{error}")
+    print(f"An unexpected error occurred! Please contact sys.execute@gmail.com\n")
     input("Press Enter to close program...")
     exit(1)
 
 
 def connection_error(error):
-    print(f"{error}! Couldn't connect to SMTP server!\n")
+    error_log = logger.error_logger()
+    error_log.exception(error)
+    print(f"\n{error}! Couldn't connect to SMTP server!\n")
     input('Press Enter to close program...')
     exit(1)
 
@@ -57,7 +62,7 @@ def select_email(fields_email):
             except ValueError or IndexError:
                 print(f"\nInvalid selection! Please insert an integer from 1 to {length}\n")
             except Exception as err:
-                unknown_error(err)
+                unexpected_error(err)
 
     return email_field
 
@@ -117,9 +122,9 @@ def login_success():
 
 
 def already_sent(sent, total):
-    print(f"\nEmails sent successfully: {sent} out of {total}\n")
+    print(f"\rEmails sent: {sent} out of {total}", end='')
 
 
 def sent_all(len_records):
-    print(f"All emails are sent successfully! (Total: {len_records}\n")
+    print(f"\nAll emails are sent successfully! (Total: {len_records})\n")
     input("Press Enter to close program...")
