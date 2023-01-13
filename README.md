@@ -1,5 +1,5 @@
 # Custom Mailing Client
-This is a desktop application that reads a CSV (\*.csv) file and fetches email adresses & other information. Then it sends a personalized email to each email adrress according to the fetched information. You'll just have to choose an email template and login to your email account.
+This is a command line application that reads a CSV (\*.csv) file and fetches email adresses & other information. Then it sends a personalized email to each email adrress according to the fetched information. You'll just have to choose an email template and login to your email account.
 **[`Download`](https://github.com/sakibhossain323/Custom-Mailing-Client/releases)**
 ## User Guide
 Suppose you are receiving responses of a event in a google form. You want to send each participant a personalized email which will contain their respective information. In such cases, you can download the responses as a CSV (\*.csv) file and use this app. You can also create your own CSV file and use that. But remember that the first row of your CSV file will be treated as the names of the fields/columns. These field/column names will be used as variables in email template. Now let's see how to send personalized emails using this app step by step:
